@@ -17,6 +17,11 @@ var popLength = NaN; //seconds, leave as NaN if you want it to go on for ever
 var popSize = 50; // ants
 var matingPoolSize = Math.round(popSize / 2);
 
+let mutationRate = 0.3;
+let uniformPerturb = 0.7;
+let perturbStrength = 0.1;
+
+
 
 
 function setup() {
@@ -25,7 +30,7 @@ function setup() {
     scoreText = createDiv('').size(100, 100);
     generationText = createDiv('').size(100, 100);
     fitText = createDiv('').size(1000, 200);
-    bestFit = createDiv('').size(1000,300);
+    bestFit = createDiv('').size(1000, 300);
 
 
 
@@ -60,7 +65,7 @@ function draw() {
     scoreText.position(width + 50, 50);
     generationText.position(width + 50, 75);
     fitText.position(width + 50, 100);
-    bestFit.position(width+ 50, 125);
+    bestFit.position(width + 50, 125);
 
     let run = 0;
     for (let i = 0; i < ants.length; i++) {
@@ -90,7 +95,8 @@ function makeNewPop(oldAnts) {
         let parent1 = random(matingPool);
         let parent2 = random(matingPool);
 
-        let childbrain = NeuralNetwork.crossover(parent1.brain, parent2.brain);
+        //let childbrain = NeuralNetwork.crossover(parent1.brain, parent2.brain);
+        let childbrain = parent1.brain.mutate(mut)
         newGen.push(new Ant(childbrain));
     }
     ants = newGen;
@@ -113,4 +119,17 @@ function pickAnt(ants) {
     index -= 1;
 
     return new Ant(ants[index].brain);
+}
+
+function mut(num) {
+    let newNum = num;
+    //mut rate change we mutate, 0.
+    if (random(0, 1) < mutationRate) {
+        if (random(0, 1) < uniformPerturb) {
+            newNum += ((random(0, 1) < 0.5) ? perturbStrength : -perturbStrength); //+ or - perturb Strength
+        } else {
+            newNum = random(-1, 1);
+        }
+    }
+    return newNum;
 }

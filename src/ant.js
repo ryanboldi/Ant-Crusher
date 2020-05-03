@@ -37,7 +37,7 @@ class Ant {
         inputs[4] = map(mouseX - this.pos.x, 0, width, -1, 1);
         inputs[5] = map(mouseY - this.pos.y, 0, height, -1, 1);
 
-        outputs = this.brain.feedforward(inputs);
+        outputs = this.brain.predict(inputs);
 
         if (outputs[0] > 0.5) this.Turn(1, 0, 0, 0);
         if (outputs[1] > 0.5) this.Turn(0, 1, 0, 0);
