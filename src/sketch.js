@@ -1,4 +1,4 @@
-const MaxSpeed = 5;
+const MaxSpeed = 25;
 
 var ants = [];
 var aliveAnts = 0;
@@ -13,9 +13,9 @@ var scoreText;
 var antColor = (150, 150, 150);
 var backColor = (153, 225, 255);
 
-var popLength = 1; //seconds, leave as NaN if you want it to go on for ever
+var popLength = 10; //seconds, leave as NaN if you want it to go on for ever
 var generationFrameCount = 0;
-var popSize = 150; // ants
+var popSize = 100; // ants
 var matingPoolSize = Math.round(popSize / 2);
 
 let mutationRate = 0.3;
