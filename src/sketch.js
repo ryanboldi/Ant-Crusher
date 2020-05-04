@@ -2,7 +2,7 @@ const MaxSpeed = 25;
 
 var ants = [];
 var aliveAnts = 0;
-var mouseSize = 75;
+var mouseSize = 100;
 
 var generation = 0;
 var averageFitness = 0;
@@ -25,8 +25,8 @@ let perturbStrength = 0.1;
 var HumanControlled = false;
 
 let MOUSEX, MOUSEY; // ROBOT MOUSE 
-
-let randomness = 50; // randomness of robot mouse movement
+let mouseVel;
+let randomness = 20; // randomness of robot mouse movement
 
 function setup() {
     angleMode(DEGREES);
@@ -38,7 +38,9 @@ function setup() {
 
     MOUSEX = width / 2;
     MOUSEY = height / 2;
-    
+
+    //mouseVel = createVector(random(-randomness, randomness), random(-randomness, randomness));
+    mouseVel = createVector(5, 5);
 
     for (let i = 0; i < popSize; i++) ants.push(new Ant());
     aliveAnts = ants.length;
@@ -95,13 +97,28 @@ function draw() {
         makeNewPop(ants);
     }
     if (((MOUSEX) < width) && (MOUSEX) > 0) {
-        MOUSEX += random(-randomness, randomness);
-    } else if ((MOUSEX) <= 0) { MOUSEX += random(0, randomness); }
-    else { MOUSEX += random(-randomness, 0); }
+        MOUSEX += mouseVel.x
+    } else if ((MOUSEX) <= 0) {
+        if (mouseVel.x > 0) MOUSEX += mouseVel.x;
+    }
+    else {
+        if (mouseVel.x < 0) MOUSEX += mouseVel.x
+    }
+
     if (((MOUSEY) < height) && (MOUSEY) > 0) {
-        MOUSEY += random(-randomness, randomness);
-    } else if ((MOUSEY) <= 0) { MOUSEY += random(0, randomness); }
-    else { MOUSEY += random(-randomness, 0); }
+        MOUSEY += mouseVel.y
+    } else if ((MOUSEY) <= 0) {
+        if (mouseVel.y > 0) MOUSEY += mouseVel.y;
+    }
+    else {
+        if (mouseVel.y < 0) MOUSEY += mouseVel.y
+    }
+
+    //randomly swap direction
+    if (random(0, 1) < 0.2) {
+        //(random(0, 1) < 0.5) ? mouseVel.x = random(-randomness, randomness) : mouseVel.y = random(-randomness, randomness);
+        mouseVel = mouseVel.rotate(20);
+    }
 }
 
 //takes last generation and their fitnesses and makes a new generation
