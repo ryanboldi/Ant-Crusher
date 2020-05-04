@@ -1,8 +1,8 @@
-const MaxSpeed = 25;
+const MaxSpeed = 35;
 
 var ants = [];
 var aliveAnts = 0;
-var mouseSize = 100;
+var mouseSize = 150;
 
 var generation = 0;
 var averageFitness = 0;
@@ -15,11 +15,11 @@ var backColor = (153, 225, 255);
 
 var popLength = 10; //seconds, leave as NaN if you want it to go on for ever
 var generationFrameCount = 0;
-var popSize = 100; // ants
+var popSize = 360; // ants
 var matingPoolSize = Math.round(popSize / 2);
 
-let mutationRate = 0.3;
-let uniformPerturb = 0.7;
+let mutationRate = 0.7;
+let uniformPerturb = 0.9;
 let perturbStrength = 0.1;
 
 var HumanControlled = false;
@@ -117,7 +117,7 @@ function draw() {
     //randomly swap direction
     if (random(0, 1) < 0.2) {
         //(random(0, 1) < 0.5) ? mouseVel.x = random(-randomness, randomness) : mouseVel.y = random(-randomness, randomness);
-        mouseVel = mouseVel.rotate(20);
+        mouseVel = mouseVel.rotate(10);
     }
 }
 
