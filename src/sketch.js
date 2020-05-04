@@ -2,7 +2,7 @@ const MaxSpeed = 25;
 
 var ants = [];
 var aliveAnts = 0;
-var mouseSize = 50;
+var mouseSize = 75;
 
 var generation = 0;
 var averageFitness = 0;
@@ -22,8 +22,10 @@ let mutationRate = 0.3;
 let uniformPerturb = 0.7;
 let perturbStrength = 0.1;
 
+var HumanControlled = false;
 
-
+let MOUSEX, MOUSEY; // ROBOT MOUSE 
+let randomness = 20; // randomness of robot mouse movement
 
 function setup() {
     angleMode(DEGREES);
@@ -33,7 +35,8 @@ function setup() {
     fitText = createDiv('').size(1000, 200);
     bestFit = createDiv('').size(1000, 300);
 
-
+    MOUSEX = width / 2;
+    MOUSEY = height / 2;
 
     for (let i = 0; i < popSize; i++) ants.push(new Ant());
     aliveAnts = ants.length;
@@ -54,10 +57,15 @@ function draw() {
     }
 
     aliveAnts = aliveCount;
+    if (HumanControlled) {
+        if (mouseIsPressed) fill(255, 0, 0);
+        else fill(255, 0, 0, 50);
+        ellipse(mouseX, mouseY, mouseSize, mouseSize);
+    } else {
+        fill(255, 0, 0);
+        ellipse(MOUSEX, MOUSEY, mouseSize, mouseSize);
+    }
 
-    if (mouseIsPressed) fill(255, 0, 0);
-    else fill(255, 0, 0, 50);
-    ellipse(mouseX, mouseY, mouseSize, mouseSize)
 
     scoreText.html('Ants alive: ' + aliveAnts);
     generationText.html('Generation: ' + generation);
@@ -84,6 +92,9 @@ function draw() {
     if (aliveAnts == 0) {
         makeNewPop(ants);
     }
+
+    MOUSEX += random(-randomness, randomness);
+    MOUSEY += random(-randomness, randomness);
 }
 
 //takes last generation and their fitnesses and makes a new generation
@@ -92,6 +103,11 @@ function makeNewPop(oldAnts) {
     generationFrameCount = 0;
     matingPool = [];
     newGen = [];
+
+    MOUSEX = width / 2;
+    MOUSEY = height / 2;
+
+
     for (let i = 0; i < matingPoolSize; i++) matingPool.push(pickAnt(oldAnts));
 
     for (let i = 0; i < popSize; i++) {
