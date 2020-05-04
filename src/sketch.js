@@ -25,7 +25,8 @@ let perturbStrength = 0.1;
 var HumanControlled = false;
 
 let MOUSEX, MOUSEY; // ROBOT MOUSE 
-let randomness = 20; // randomness of robot mouse movement
+
+let randomness = 50; // randomness of robot mouse movement
 
 function setup() {
     angleMode(DEGREES);
@@ -37,6 +38,7 @@ function setup() {
 
     MOUSEX = width / 2;
     MOUSEY = height / 2;
+    
 
     for (let i = 0; i < popSize; i++) ants.push(new Ant());
     aliveAnts = ants.length;
@@ -92,9 +94,14 @@ function draw() {
     if (aliveAnts == 0) {
         makeNewPop(ants);
     }
-
-    MOUSEX += random(-randomness, randomness);
-    MOUSEY += random(-randomness, randomness);
+    if (((MOUSEX) < width) && (MOUSEX) > 0) {
+        MOUSEX += random(-randomness, randomness);
+    } else if ((MOUSEX) <= 0) { MOUSEX += random(0, randomness); }
+    else { MOUSEX += random(-randomness, 0); }
+    if (((MOUSEY) < height) && (MOUSEY) > 0) {
+        MOUSEY += random(-randomness, randomness);
+    } else if ((MOUSEY) <= 0) { MOUSEY += random(0, randomness); }
+    else { MOUSEY += random(-randomness, 0); }
 }
 
 //takes last generation and their fitnesses and makes a new generation
