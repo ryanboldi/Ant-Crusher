@@ -15,7 +15,7 @@ class Ant {
         this.alive = true; //boolean
 
         //position is initialised randomly, somewhere in the middle half of the screen (1/4 - > 3/4), just so ants dont spawn too close to the walls
-        this.pos = createVector(random(width / 4, 3 * (width / 4)), random(height / 4, 3 * (height / 4)));
+        this.pos = createVector(random(width / 6, 5 * (width / 6)), random(height / 6, 5 * (height / 6)));
 
         //velocity is initialised randomly, then limited so that the ant does not exceed the max speed;
         this.vel = (createVector(random(-MaxSpeed, MaxSpeed), random(-MaxSpeed, MaxSpeed))).limit(MaxSpeed);
@@ -34,8 +34,8 @@ class Ant {
         inputs[1] = map(width - this.pos.x, 0, width, -1, 1);
         inputs[2] = map(this.pos.y, 0, height, -1, 1);
         inputs[3] = map(height - this.pos.y, 0, height, -1, 1);
-        inputs[4] = map(mouseX - this.pos.x, 0, width, -1, 1);
-        inputs[5] = map(mouseY - this.pos.y, 0, height, -1, 1);
+        inputs[4] = map(Math.abs(mouseX - this.pos.x), 0, width, -1, 1);
+        inputs[5] = map(Math.abs(mouseY - this.pos.y), 0, height, -1, 1);
 
         outputs = this.brain.predict(inputs);
 
