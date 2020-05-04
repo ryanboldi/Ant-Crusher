@@ -1,4 +1,4 @@
-const MaxSpeed = 35;
+const MaxSpeed = 10;
 
 var ants = [];
 var aliveAnts = 0;
@@ -23,10 +23,11 @@ let uniformPerturb = 0.9;
 let perturbStrength = 0.1;
 
 var HumanControlled = false;
+let distStrength = 2; //maximum fitness per frame the creature can get for being far away from the mouse
 
 let MOUSEX, MOUSEY; // ROBOT MOUSE 
 let mouseVel;
-let randomness = 20; // randomness of robot mouse movement
+let randomness = 50; // randomness of robot mouse movement
 
 function setup() {
     angleMode(DEGREES);
@@ -40,7 +41,7 @@ function setup() {
     MOUSEY = height / 2;
 
     //mouseVel = createVector(random(-randomness, randomness), random(-randomness, randomness));
-    mouseVel = createVector(5, 5);
+    mouseVel = createVector(7, 7);
 
     for (let i = 0; i < popSize; i++) ants.push(new Ant());
     aliveAnts = ants.length;

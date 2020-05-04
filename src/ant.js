@@ -3,7 +3,7 @@ class Ant {
         if (brain instanceof NeuralNetwork) {
             this.brain = brain;
         }
-        else this.brain = new NeuralNetwork(6, 10, 4);
+        else this.brain = new NeuralNetwork(6, 16, 4);
         //how fast the ant can accelerate in one time step
         this.accel = 10;
         //how fast (angle) the ant can rotate in one time step
@@ -46,7 +46,11 @@ class Ant {
 
         this.CheckCollision();
         this.pos.add(this.vel);
-        if (this.alive) this.fitness++;
+        if (HumanControlled) {
+            if (this.alive) this.fitness += 1 + map((((this.pos.x - mouseX) ** 2) + ((this.pos.y - mouseY) ** 2)), 0, (width ** 2 + height ** 2), 0, distStrength);
+        } else {
+            if (this.alive) this.fitness += 1 + map((((this.pos.x - MOUSEX) ** 2) + ((this.pos.y - MOUSEY) ** 2)), 0, (width ** 2 + height ** 2), 0, distStrength);
+        }
     }
 
     Draw() {
