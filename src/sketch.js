@@ -2,7 +2,7 @@ const MaxSpeed = 5;
 
 var ants = [];
 var aliveAnts = 0;
-var mouseSize = 75;
+var mouseSize = 50;
 
 var generation = 0;
 var averageFitness = 0;
@@ -13,8 +13,9 @@ var scoreText;
 var antColor = (150, 150, 150);
 var backColor = (153, 225, 255);
 
-var popLength = NaN; //seconds, leave as NaN if you want it to go on for ever
-var popSize = 50; // ants
+var popLength = 1; //seconds, leave as NaN if you want it to go on for ever
+var generationFrameCount = 0;
+var popSize = 150; // ants
 var matingPoolSize = Math.round(popSize / 2);
 
 let mutationRate = 0.3;
@@ -40,6 +41,7 @@ function setup() {
 }
 
 function draw() {
+    generationFrameCount++;
     background(153, 225, 255);
 
     fill(antColor);
@@ -75,7 +77,7 @@ function draw() {
 
     averageFitness = (run / ants.length);
 
-    if (frameCount % (popLength * 60) == 0) {
+    if (generationFrameCount % (popLength * 60) == 0) {
         makeNewPop(ants);
     }
 
@@ -87,6 +89,7 @@ function draw() {
 //takes last generation and their fitnesses and makes a new generation
 function makeNewPop(oldAnts) {
     generation++;
+    generationFrameCount = 0;
     matingPool = [];
     newGen = [];
     for (let i = 0; i < matingPoolSize; i++) matingPool.push(pickAnt(oldAnts));
